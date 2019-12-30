@@ -2,4 +2,6 @@
 Windows-based software (WPF) for bodybuilding coaches to record and print their students' workout.
 
 # Project
-TargetFrameworkVersion: 4
+- WPF Application (Persian App)
+- TargetFrameworkVersion: 4.5
+- Entity Framwork 6.2 (Code First)

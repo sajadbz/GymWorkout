@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using GymWorkout.Data;
+using GymWorkout.Views;
 
 namespace GymWorkout
 {
@@ -22,6 +25,24 @@ namespace GymWorkout
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            LblTime.Content = DateTime.Now.ToString("dddd dd MMMM yyyy - HH:mm:ss");
+            DispatcherTimer timer = new DispatcherTimer(){Interval = TimeSpan.FromSeconds(1),IsEnabled = true};
+            timer.Tick += Timer_Tick;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            LblTime.Content = DateTime.Now.ToString("dddd dd MMMM yyyy - HH:mm:ss");
+        }
+
+        private void BtnStudents_OnClick(object sender, RoutedEventArgs e)
+        {
+            new vwStudents() {Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner}.ShowDialog();
+            
         }
     }
 }

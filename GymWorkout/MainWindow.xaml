@@ -3,10 +3,84 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GymWorkout"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:local="clr-namespace:GymWorkout" Loaded="MainWindow_OnLoaded"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="450" Width="800" 
+        FlowDirection="RightToLeft">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top"  FontFamily="/GymWorkout;component/Content/Fonts/#IRAN Sans" FontSize="20">
+            <MenuItem Header="شاگرد ها">
+                <MenuItem.Icon>
+                    <Image Source="Content/Images/user_24x24.png" Stretch="Fill"></Image>
+                </MenuItem.Icon>
+                <MenuItem Header="ایجاد شاگرد جدید">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/add user_24x24.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="مدیریت شاگرد ها" Name="BtnStudents" Click="BtnStudents_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/user-sm.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </MenuItem>
+            <MenuItem Header="برنامه">
+                <MenuItem.Icon>
+                    <Image Source="Content/Images/Report.png"></Image>
+                </MenuItem.Icon>
+                <MenuItem Header="ایجاد تمرین جدید">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/add.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="مدیریت عنوان ها">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/list-icon.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="برنامه غذایی">
+                <MenuItem.Icon>
+                    <Image Source="Content/Images/stuff_24x24.png" Stretch="Fill"></Image>
+                </MenuItem.Icon>
+                <MenuItem Header="ایجاد برنامه جدید">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/add.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="مدیریت وعده ها">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/list-icon.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="مدیریت واحد ها">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/list-icon.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="راهنما">
+                <MenuItem.Icon>
+                    <Image Source="Content/Images/info_32x32.png"></Image>
+                </MenuItem.Icon>
+                <MenuItem Header="درباره برنامه">
+                    <MenuItem.Icon>
+                        <Image Source="Content/Images/sinfo_16.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </MenuItem>
+            <MenuItem Header="خروج">
+                <MenuItem.Icon>
+                    <Image Source="Content/Images/exit.png"></Image>
+                </MenuItem.Icon>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem Name="LblTime" Content=""></StatusBarItem>
+        </StatusBar>
+        <Image Source="Content/Images/Background.jpg" Stretch="UniformToFill"></Image>
+
+    </DockPanel>
 </Window>

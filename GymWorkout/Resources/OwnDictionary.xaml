@@ -1,0 +1,65 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:culture="clr-namespace:GymWorkout.Application.Culture"
+                    xmlns:imgconvertor="clr-namespace:GymWorkout.Convertor">
+    
+    <culture:PersianCulture x:Key="PersianCulture"/>
+    <imgconvertor:ImageUriConvertor x:Key="ImageUriConvertor"/>
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="5,0,5,0" />
+    </Style>
+    <Style TargetType="{x:Type Label}" x:Key="LabelFormStyle" BasedOn="{StaticResource {x:Type Label}}">
+        <Setter Property="Margin" Value="2,0,2,0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Right" />
+    </Style>
+    <Style TargetType="{x:Type ComboBox}" x:Key="ComboBoxFormStyle" BasedOn="{StaticResource {x:Type ComboBox}}">
+        <Setter Property="Margin" Value="10 10 30 10" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxFormStyle" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Margin" Value="10 10 30 10" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxFormStyle" BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="Margin" Value="10 10 30 10" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style TargetType="{x:Type Button}" x:Key="SaveButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="#5cb85c" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,2,40,2" />
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <DockPanel LastChildFill="true">
+                        <Border Background="Red" DockPanel.Dock="right" Margin="5,0,0,0" Width="20" Height="20" CornerRadius="10"
+                                    ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white">
+                            </TextBlock>
+                        </Border>
+                        <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                            <Border BorderBrush="red" BorderThickness="1" />
+                        </AdornedElementPlaceholder>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

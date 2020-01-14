@@ -1,38 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using GymWorkout.Data;
-using GymWorkout.Entity.General;
+using GymWorkout.Entity.Foods;
 using WPFCustomMessageBox;
 
 namespace GymWorkout.Views
 {
     /// <summary>
-    /// Interaction logic for vwStudents.xaml
+    /// Interaction logic for vwFoodUnits.xaml
     /// </summary>
-    public partial class vwStudents : Window
+    public partial class vwFoodUnits : Window
     {
         private readonly GymContext _context = new GymContext();
-        private Student _student = new Student();
+        private FoodUnit _foodUnit = new FoodUnit();
 
-        public vwStudents()
+        public vwFoodUnits()
         {
             var splashScreen = new SplashScreenWindow();
             splashScreen.Show();
 
             InitializeComponent();
             BindGrid();
-            CboGender.ItemsSource = _context.Genders.ToList();
-            GbAddEdit.DataContext = _student;
+            GbAddEdit.DataContext = _foodUnit;
 
             splashScreen.Close();
         }
-
-
         #region Commands
 
         private void DeleteCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -42,11 +38,11 @@ namespace GymWorkout.Views
 
         private void DeleteCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var student = GrdList.SelectedItem as Student;
-            if (student != null && CustomMessageBox.ShowYesNo($"جهت حذف رکورد '{student.FullName}' اطمینان دارید ؟", "حذف رکورد", "بله", "خیر", MessageBoxImage.Warning)
+            var student = GrdList.SelectedItem as FoodUnit;
+            if (student != null && CustomMessageBox.ShowYesNo($"جهت حذف رکورد '{student.Title}' اطمینان دارید ؟", "حذف رکورد", "بله", "خیر", MessageBoxImage.Warning)
                 == MessageBoxResult.Yes)
             {
-                _context.Students.Attach(student);
+                _context.FoodUnits.Attach(student);
                 _context.Entry(student).State = EntityState.Deleted;
 
                 _context.SaveChanges();
@@ -59,26 +55,16 @@ namespace GymWorkout.Views
 
         #region Events Methods
 
-        private void VwStudents_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            CboGender.SelectedIndex = 1;
-        }
-
         private void GrdList_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (GrdList.Items.Count > 0)
             {
-                _student = (Student)GrdList.SelectedItem;
-                GbAddEdit.DataContext = _student;
-                GbAddEdit.Header = $"ویرایش '{_student.FullName}'";
+                _foodUnit = (FoodUnit)GrdList.SelectedItem;
+                GbAddEdit.DataContext = _foodUnit;
+                GbAddEdit.Header = $"ویرایش '{_foodUnit.Title}'";
                 BtnSave.Content = "ویرایش";
                 BtnSave.Background = new SolidColorBrush(Color.FromRgb(247, 194, 44));
             }
-        }
-
-        private void BtnSearch_OnClick(object sender, RoutedEventArgs e)
-        {
-            BindGrid(TxtSearchFullName.Text, TxtSearchMobile.Text);
         }
 
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
@@ -86,15 +72,15 @@ namespace GymWorkout.Views
             if (CustomMessageBox.ShowYesNo("جهت ثبت اطلاعات اطمینان دارید ؟", "ثبت اطلاعات", "بله", "خیر", MessageBoxImage.Information)
                 == MessageBoxResult.Yes)
             {
-                if (_student.Id == 0)
+                if (_foodUnit.Id == 0)
                 {
-                    _student.CreateDate = DateTime.Now;
-                    _context.Students.Add(_student);
+                    _foodUnit.CreateDate = DateTime.Now;
+                    _context.FoodUnits.Add(_foodUnit);
                 }
                 else
                 {
-                    _context.Students.Attach(_student);
-                    _context.Entry(_student).State = EntityState.Modified;
+                    _context.FoodUnits.Attach(_foodUnit);
+                    _context.Entry(_foodUnit).State = EntityState.Modified;
                 }
                 _context.SaveChanges();
                 Reset();
@@ -112,37 +98,24 @@ namespace GymWorkout.Views
             this.Close();
         }
 
-        private void BtnSearchCancel_OnClick(object sender, RoutedEventArgs e)
-        {
-            TxtSearchFullName.Text = TxtSearchMobile.Text = "";
-            BindGrid();
-        }
         #endregion
 
         #region Methods
 
         private void Reset()
         {
-            _student = new Student();
-            GbAddEdit.DataContext = _student;
+            _foodUnit = new FoodUnit();
+            GbAddEdit.DataContext = _foodUnit;
             BtnSave.Content = GbAddEdit.Header = "افزودن";
             BtnSave.Background = new SolidColorBrush(Color.FromRgb(92, 184, 92));
-            BindGrid(TxtSearchFullName.Text, TxtSearchMobile.Text);
+            BindGrid();
         }
 
-        private void BindGrid(string fullname = "", string mobile = "")
+        private void BindGrid()
         {
-            IEnumerable<Student> result = _context.Students;
-            if (!string.IsNullOrWhiteSpace(fullname))
-                result = result.Where(c => c.FullName.Contains(fullname));
-            if (!string.IsNullOrWhiteSpace(mobile))
-                result = result.Where(c => c.Mobile.Contains(mobile));
-
-            GrdList.ItemsSource = result.ToList();
+            GrdList.ItemsSource = _context.FoodUnits.ToList();
         }
 
         #endregion
-
-
     }
 }

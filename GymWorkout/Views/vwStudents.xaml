@@ -3,13 +3,180 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GymWorkout.Views" Loaded="VwStudents_OnLoaded"
-        mc:Ignorable="d" FlowDirection="RightToLeft"
-        Title="vwStudents" Height="450" Width="800">
+        xmlns:pc="http://github.com/ghost1372/PersianToolkit"
+        xmlns:local="clr-namespace:GymWorkout"
+        xmlns:validation="clr-namespace:GymWorkout.Validation"
+        Loaded="VwStudents_OnLoaded"
+        mc:Ignorable="d" FlowDirection="RightToLeft" ShowInTaskbar="False" WindowStyle="None" ResizeMode="NoResize"
+        Title="فهرست شاگردها" Height="450" Width="670">
+    <Window.Resources>
+        <Style x:Key="SaveButton" TargetType="Button" BasedOn="{StaticResource SaveButtonStyle}">
+            <Setter Property="IsEnabled" Value="False"></Setter>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=TxtName,Path=(Validation.HasError)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=TxtFamily,Path=(Validation.HasError)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=TxtHeight,Path=(Validation.HasError)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=TxtWeight,Path=(Validation.HasError)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=TxtMobile,Path=(Validation.HasError)}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="IsEnabled" Value="True"></Setter>
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" FontFamily="/GymWorkout;component/Content/Fonts/#IRAN Sans" FontSize="20">
-            <MenuItem Header="افزودن"></MenuItem>
-        </Menu>
-        <DataGrid Name="GrdList" AutoGenerateColumns="True"></DataGrid>
+        <GroupBox Name="GbAddEdit" Header="افزودن" DockPanel.Dock="Top">
+            <Grid local:AccessKeyScoper.IsAccessKeyScope="True">
+                <Grid.Resources>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0 0 0 15" />
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="DockPanel">
+                        <Setter Property="Width" Value="150"/>
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Padding" Value="2"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                    <DockPanel>
+                        <Label DockPanel.Dock="Left" Target="{Binding ElementName= TxtName}">نام:</Label>
+                        <TextBox Name="TxtName" >
+                            <TextBox.Text>
+                                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validation:RequiredValidator ValidatesOnTargetUpdated="True" />
+                                        <validation:StringLenghtValidation Min="0" Max="50" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= TxtFamily}" >نام خانوادگی:</Label>
+                        <TextBox Name="TxtFamily">
+                            <TextBox.Text>
+                                <Binding Path="Family" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validation:RequiredValidator ValidatesOnTargetUpdated="True" />
+                                        <validation:StringLenghtValidation Min="0" Max="100" ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= CboGender}" >جنسیت:</Label>
+                        <ComboBox Name="CboGender" SelectedValue="{Binding GenderId}" DisplayMemberPath="Display" SelectedValuePath="Id"></ComboBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= TxtWeight}" >وزن:</Label>
+                        <TextBox Name="TxtWeight">
+                            <TextBox.Text>
+                                <Binding Path="Weight" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validation:RequiredValidator ValidatesOnTargetUpdated="True" />
+                                        <validation:RangeValidator Min="1" Max="300" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= TxtHeight}" >قد:</Label>
+                        <TextBox Name="TxtHeight">
+                            <TextBox.Text>
+                                <Binding Path="Height" StringFormat="{}{0:#}" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validation:RequiredValidator ValidatesOnTargetUpdated="True" />
+                                        <validation:RangeValidator Min="1" Max="300" ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= TxtMobile}" >موبایل:</Label>
+                        <TextBox Name="TxtMobile">
+                            <TextBox.Text>
+                                <Binding Path="Mobile" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validation:RequiredValidator ValidatesOnTargetUpdated="True"/>
+                                        <validation:RegularValidator ValidatesOnTargetUpdated="True" Pattern="^(\+98|0)?9\d{9}$" Message="موبایل وارد شده صحیح نمی باشد" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= TxtPhone}" >تلفن:</Label>
+                        <TextBox Name="TxtPhone">
+                            <TextBox.Text>
+                                <Binding Path="Phone" UpdateSourceTrigger="PropertyChanged">
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Target="{Binding ElementName= TxtBirthDate}" >تاریخ تولد:</Label>
+                        <pc:DatePicker SelectedDate="{Binding BirthDate}" />
+                    </DockPanel>
+                </WrapPanel>
+                <!--<Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>-->
+                <Button Grid.Row="2" Grid.Column="0"  Name="BtnClose" Foreground="White" Background="#d9534f" Click="BtnClose_OnClick">خروج</Button>
+                <Button Grid.Row="2" Grid.Column="1"  Name="BtnCancel" Background="#f9f9f9" Click="BtnCancel_OnClick">انصراف</Button>
+                <Button Grid.Row="2" Grid.Column="2"  Name="BtnSave" IsDefault="True" Style="{StaticResource SaveButton}" Click="BtnSave_OnClick">افزودن</Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox Name="GbSearch" Header="جستجو" DockPanel.Dock="Left" Width="120">
+            <StackPanel local:AccessKeyScoper.IsAccessKeyScope="True">
+                <Label DockPanel.Dock="Left" Target="{Binding ElementName= TxtSearchFullName}">نام:</Label>
+                <TextBox Name="TxtSearchFullName" ></TextBox>
+                <Label DockPanel.Dock="Left" Target="{Binding ElementName= TxtSearchMobile}">موبایل:</Label>
+                <TextBox Name="TxtSearchMobile"></TextBox>
+                <Button Name="BtnSearch" IsDefault="True" Margin="0 10 0 0" Click="BtnSearch_OnClick">جستجو</Button>
+                <Button Name="BtnSearchCancel" Margin="0 10 0 0" Background="#f9f9f9" Click="BtnSearchCancel_OnClick">انصراف</Button>
+            </StackPanel>
+        </GroupBox>
+        <DataGrid Name="GrdList" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" AutoGenerateColumns="False"
+                  MouseDoubleClick="GrdList_OnMouseDoubleClick"  ItemsSource="{Binding}" >
+            <DataGrid.CommandBindings>
+                <CommandBinding Command="Delete" CanExecute="DeleteCommandBinding_OnCanExecute" Executed="DeleteCommandBinding_OnExecuted" />
+            </DataGrid.CommandBindings>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="حذف" Foreground="OrangeRed" Command="Delete"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="نام و نام خانوادگی" Binding="{Binding FullName}" Width="*" />
+                <DataGridTextColumn Header="وزن" Binding="{Binding Weight}" Width="70" />
+                <DataGridTextColumn Header="قد" Binding="{Binding Height}" Width="70" />
+                <DataGridTextColumn Header="سن" Binding="{Binding Age}" Width="50" />
+                <DataGridTextColumn Header="موبایل" Binding="{Binding Mobile}" Width="80" />
+                <DataGridTextColumn Header="تلفن" Binding="{Binding Path=Phone}" Width="80" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Window>

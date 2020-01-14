@@ -18,7 +18,7 @@ namespace GymWorkout.Entity.General
         [Required, MaxLength(100)]
         public string Family { get; set; }
         public decimal Weight { get; set; }
-        public decimal Height { get; set; }
+        public short Height { get; set; }
         [MaxLength(20)]
         public string Mobile { get; set; }
         [MaxLength(20)]

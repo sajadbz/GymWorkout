@@ -12,7 +12,7 @@ namespace GymWorkout.Entity.Workouts
         [Key]
         public int Id { get; set; }
         public int StudentId { get; set; }
-        public string Note { get; set; }
+        public string Title { get; set; }
 
         public DateTime CreateDate { get; set; }
 

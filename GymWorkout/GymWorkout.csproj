@@ -89,10 +89,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CustomCommands.cs" />
     <Compile Include="Convertor\ImageUriConvertor.cs" />
     <Compile Include="Data\Migrations\202001141227040_Update_Student_HeightType.cs" />
     <Compile Include="Data\Migrations\202001141227040_Update_Student_HeightType.Designer.cs">
       <DependentUpon>202001141227040_Update_Student_HeightType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\202001221439486_Update-Workout-WorkoutDetail-Table.cs" />
+    <Compile Include="Data\Migrations\202001221439486_Update-Workout-WorkoutDetail-Table.Designer.cs">
+      <DependentUpon>202001221439486_Update-Workout-WorkoutDetail-Table.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Validation\RangeValidator.cs" />
@@ -110,6 +115,9 @@
     </Compile>
     <Compile Include="Views\vwStudents.xaml.cs">
       <DependentUpon>vwStudents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\vwWorkouts.xaml.cs">
+      <DependentUpon>vwWorkouts.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\vwWorkoutTitles.xaml.cs">
       <DependentUpon>vwWorkoutTitles.xaml</DependentUpon>
@@ -162,6 +170,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\vwWorkouts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\vwWorkoutTitles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +207,9 @@
     <EmbeddedResource Include="Data\Migrations\202001141227040_Update_Student_HeightType.resx">
       <DependentUpon>202001141227040_Update_Student_HeightType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Data\Migrations\202001221439486_Update-Workout-WorkoutDetail-Table.resx">
+      <DependentUpon>202001221439486_Update-Workout-WorkoutDetail-Table.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -211,9 +226,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Application\Extensions\" />
     <Folder Include="Data\Repository\Implementations\" />
     <Folder Include="Data\Repository\Interfaces\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Content\Images\add box_24x24.png" />

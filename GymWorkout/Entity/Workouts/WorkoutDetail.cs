@@ -14,7 +14,8 @@ namespace GymWorkout.Entity.Workouts
 
         public int Day { get; set; }
         public int SetNumbers { get; set; }
-        public int Count { get; set; }
+        [MaxLength(150)]
+        public string Count { get; set; }
 
         public DateTime CreateDate { get; set; }
 

@@ -37,13 +37,12 @@ namespace GymWorkout.Views
 
         private void DeleteCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            e.CanExecute = GrdList.SelectedItem is Student student;
         }
 
         private void DeleteCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var student = GrdList.SelectedItem as Student;
-            if (student != null && CustomMessageBox.ShowYesNo($"جهت حذف رکورد '{student.FullName}' اطمینان دارید ؟", "حذف رکورد", "بله", "خیر", MessageBoxImage.Warning)
+            if (GrdList.SelectedItem is Student student && CustomMessageBox.ShowYesNo($"جهت حذف رکورد '{student.FullName}' اطمینان دارید ؟", "حذف رکورد", "بله", "خیر", MessageBoxImage.Warning)
                 == MessageBoxResult.Yes)
             {
                 _context.Students.Attach(student);
@@ -55,6 +54,18 @@ namespace GymWorkout.Views
             }
         }
 
+        private void WorkoutCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = (GrdList.SelectedItem is Student);
+        }
+
+        private void WorkoutCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (GrdList.SelectedItem is Student student)
+            {
+                new vwWorkouts(student.Id) { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }.ShowDialog();
+            }
+        }
         #endregion
 
         #region Events Methods
@@ -144,5 +155,6 @@ namespace GymWorkout.Views
         #endregion
 
 
+        
     }
 }
